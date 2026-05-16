@@ -1,144 +1,132 @@
 # Advanced Algorithms Study Notes
 
-Short, exam-focused notes for the MSc Advanced Algorithms module, prepared from Lessons 01-04.
+Study-focused short notes for the MSc Advanced Algorithms module, updated from Lessons 01-06.
+
+Source base: Lesson 01-06 PDFs
 
 ## Contents
 
 1. [Introduction to Algorithms](#1-introduction-to-algorithms)
-2. [Algorithm Correctness](#2-algorithm-correctness)
+2. [Correctness of Algorithms](#2-correctness-of-algorithms)
 3. [Complexity of Algorithms](#3-complexity-of-algorithms)
 4. [Best, Worst, and Average Case](#4-best-worst-and-average-case)
 5. [Asymptotic Notation](#5-asymptotic-notation)
-6. [Common Growth Rates](#6-common-growth-rates)
-7. [Complexity Rules](#7-complexity-rules)
-8. [Basic Complexity Examples](#8-basic-complexity-examples)
-9. [Sum of 1 to n](#9-sum-of-1-to-n)
-10. [Insertion Sort](#10-insertion-sort)
-11. [Loop Invariant](#11-loop-invariant)
-12. [Merge Sort](#12-merge-sort)
-13. [Recurrence Relations](#13-recurrence-relations)
-14. [Solving Recurrences](#14-solving-recurrences)
-15. [Divide and Conquer](#15-divide-and-conquer)
-16. [Master Theorem](#16-master-theorem)
-17. [Binary Search](#17-binary-search)
-18. [Powering a Number](#18-powering-a-number)
-19. [Fibonacci Numbers](#19-fibonacci-numbers)
-20. [Matrix Multiplication](#20-matrix-multiplication)
-21. [Strassen Improvement Problem](#21-strassen-improvement-problem)
-22. [Quicksort](#22-quicksort)
-23. [Algorithm Comparison Table](#23-algorithm-comparison-table)
-24. [Exam-Style Questions](#24-exam-style-questions)
-25. [Final Revision Points](#25-final-revision-points)
-26. [Study Plan](#26-study-plan)
+6. [Basic Complexity Patterns](#6-basic-complexity-patterns)
+7. [Insertion Sort](#7-insertion-sort)
+8. [Divide and Conquer](#8-divide-and-conquer)
+9. [Recurrence Relations](#9-recurrence-relations)
+10. [Merge Sort](#10-merge-sort)
+11. [Binary Search](#11-binary-search)
+12. [Master Theorem](#12-master-theorem)
+13. [Powering a Number](#13-powering-a-number)
+14. [Fibonacci Numbers](#14-fibonacci-numbers)
+15. [Matrix Multiplication and Strassen's Algorithm](#15-matrix-multiplication-and-strassens-algorithm)
+16. [Quicksort](#16-quicksort)
+17. [Dynamic Programming](#17-dynamic-programming)
+18. [Coin-Row Problem](#18-coin-row-problem)
+19. [Rod Cutting Problem](#19-rod-cutting-problem)
+20. [Matrix Chain Multiplication](#20-matrix-chain-multiplication)
+21. [Greedy Algorithms](#21-greedy-algorithms)
+22. [Activity Selection Problem](#22-activity-selection-problem)
+23. [Greedy Scheduling Example](#23-greedy-scheduling-example)
+24. [Huffman Encoding](#24-huffman-encoding)
+25. [DP vs Greedy](#25-dp-vs-greedy)
+26. [Important Algorithm Complexity Summary](#26-important-algorithm-complexity-summary)
+27. [Exam-Focused Formulas](#27-exam-focused-formulas)
+28. [Very Important Final Revision](#28-very-important-final-revision)
 
 ---
 
 ## 1. Introduction to Algorithms
 
-### 1.1 What Is an Algorithm?
+### 1.1 What is an Algorithm?
 
-An algorithm is a well-defined, step-by-step computational procedure that takes input, processes it, and produces output in a finite amount of time.
+An algorithm is a finite sequence of clear steps used to solve a problem. It takes input, processes it, and gives output.
 
 ```text
 Input -> Algorithm -> Output
 ```
 
-Example: find the largest number in an array.
+Example:
 
 ```text
+Problem: Find maximum number
 Input:  [4, 9, 2, 7]
 Output: 9
 ```
 
-The algorithm checks each number and keeps track of the largest value.
+### 1.2 Features of an Algorithm
 
-### 1.2 Important Features of an Algorithm
+A proper algorithm should have:
 
 | Feature | Meaning |
 | --- | --- |
-| Finiteness | Must terminate after a finite number of steps |
-| Definiteness | Each step must be clear and unambiguous |
-| Input | Can have zero or more inputs |
-| Output | Must produce at least one output |
+| Finiteness | Must stop after finite steps |
+| Definiteness | Every step must be clear |
+| Input | Zero or more inputs |
+| Output | At least one output |
 | Effectiveness | Each operation must be simple and executable |
+
+These features are directly emphasized in Lesson 01.
 
 ### 1.3 Why Study Algorithms?
 
-Algorithms are important because they:
+Algorithms are important because they are the core of computer science and are used in real-world applications such as sorting, internet systems, e-commerce, manufacturing, and large-scale data problems. Lesson 01 also explains that efficient algorithms matter because computer time and memory are limited resources.
 
-- Form the core of computer science.
-- Help solve real-world problems efficiently.
-- Reduce time and memory usage.
-- Provide tools for designing better solutions.
-- Can make a slower computer outperform a faster one if the algorithm is better.
+A very important idea:
 
-Example: merge sort on a slower computer can beat insertion sort on a faster computer for large inputs because merge sort has better asymptotic complexity.
+```text
+A good algorithm on a slower computer can beat a bad algorithm on a faster computer.
+```
 
 ---
 
-## 2. Algorithm Correctness
+## 2. Correctness of Algorithms
 
-An algorithm is useful only if it is correct.
-
-For every valid input, a correct algorithm must:
-
-- Produce the correct output.
-- Terminate.
+An algorithm is correct if it gives the correct output for every valid input and terminates.
 
 ### 2.1 Partial Correctness
 
-If the algorithm terminates, the answer it gives is correct.
+If the algorithm terminates, the answer is correct.
 
 ### 2.2 Termination
 
 The algorithm must eventually stop.
 
-### 2.3 GCD by Consecutive Integer Checking
+### 2.3 Example: GCD by Consecutive Integer Checking
 
-Problem: find `gcd(m, n)`.
-
-Algorithm:
+To find `gcd(m, n)`:
 
 ```text
-1. Let t = min(m, n)
-2. Divide m by t
-3. If m is divisible by t, divide n by t
-4. If n is also divisible by t, return t
-5. Otherwise, decrease t by 1 and repeat
+1. t = min(m, n)
+2. Check whether t divides both m and n
+3. If yes, return t
+4. Otherwise, t = t - 1
+5. Repeat
 ```
 
 Example:
 
 ```text
 gcd(12, 30)
-t = min(12, 30) = 12
-```
 
-Check values:
+t = 12 -> not divisor of both
+t = 11 -> no
+t = 10 -> no
+...
+t = 6
 
-```text
-30 mod 12 != 0
-t = 11, 10, 9, 8, 7
-```
-
-When `t = 6`:
-
-```text
 12 mod 6 = 0
 30 mod 6 = 0
-```
 
-Therefore:
-
-```text
 gcd(12, 30) = 6
 ```
 
-This method terminates because `t` keeps decreasing and eventually reaches `1`, which divides every positive integer.
+This algorithm terminates because `t` decreases and eventually reaches `1`, which divides every positive integer.
 
 ### 2.4 Euclid's Algorithm
 
-Euclid's algorithm is a faster method for GCD.
+Euclid's algorithm is a more efficient GCD algorithm.
 
 ```text
 while n != 0:
@@ -162,54 +150,52 @@ gcd(123, 36)
 gcd(123, 36) = 3
 ```
 
-Euclid's algorithm is a decrease-and-conquer algorithm because each step reduces the problem into a smaller version.
+Euclid's algorithm is a decrease-and-conquer algorithm because it replaces the original problem with a smaller one.
 
 ---
 
 ## 3. Complexity of Algorithms
 
+### 3.1 What is Complexity?
+
 Complexity measures how much resource an algorithm uses.
 
-| Complexity Type | Meaning |
+| Type | Meaning |
 | --- | --- |
 | Time complexity | How running time grows with input size |
 | Space complexity | How memory usage grows with input size |
 
-Actual clock time is not a reliable universal measure because it depends on:
+Lesson 02 explains that actual running time depends on many factors, such as input size, data structure, hardware, software, language, compiler, and other running programs.
 
-- Computer speed
-- Programming language
-- Compiler or interpreter
-- Operating system
-- Other running programs
+### 3.2 Why Asymptotic Analysis?
 
-Therefore, we use asymptotic analysis, which measures running time as a function of input size `n`.
+Clock time is not enough because different machines and languages give different results. Therefore, algorithm analysis expresses running time as a function of input size `n`.
+
+```text
+Running time = f(n)
+```
 
 ---
 
 ## 4. Best, Worst, and Average Case
 
-For the same input size, different inputs may take different amounts of time.
+For the same input size, an algorithm may take different time depending on the input.
 
 Example: sequential search in an array of size `n`.
 
-```text
-A = [5, 8, 10, 15, 20]
-```
+| Case | Meaning | Time |
+| --- | --- | --- |
+| Best case | Item found first | O(1) |
+| Worst case | Item found last or not found | O(n) |
+| Average case | Item found around middle | O(n) |
 
-| Case | Example | Comparisons | Complexity |
-| --- | --- | ---: | --- |
-| Best case | Search for `5` | 1 | O(1) |
-| Worst case | Search for `20` | n | O(n) |
-| Average case | Random item | n/2 | O(n) |
-
-Worst-case analysis is commonly used because it gives an upper bound on running time.
+In algorithm analysis, worst-case analysis is commonly used because it gives an upper bound.
 
 ---
 
 ## 5. Asymptotic Notation
 
-Asymptotic notation describes how an algorithm grows when input size becomes large.
+Asymptotic notation describes the growth rate of algorithms for large input sizes.
 
 ### 5.1 Big-O Notation
 
@@ -225,26 +211,13 @@ Meaning:
 f(n) <= c * g(n), for all n >= n0
 ```
 
-where `c` and `n0` are positive constants.
-
-Example: prove `2n^2 + 10 = O(n^2)`.
-
-We need:
+Example:
 
 ```text
-2n^2 + 10 <= c n^2
+f(n) = 2n^2 + 10
 ```
 
-Choose `c = 3`:
-
-```text
-2n^2 + 10 <= 3n^2
-10 <= n^2
-```
-
-This is true when `n >= 4`.
-
-Therefore:
+For large `n`, the dominant term is `n^2`.
 
 ```text
 2n^2 + 10 = O(n^2)
@@ -257,8 +230,6 @@ Omega gives a lower bound.
 ```text
 f(n) = Omega(g(n))
 ```
-
-Meaning: `f(n)` grows at least as fast as `g(n)`.
 
 Example:
 
@@ -274,26 +245,23 @@ Theta gives a tight bound.
 f(n) = Theta(g(n))
 ```
 
-Meaning: `f(n)` grows at the same rate as `g(n)`.
-
 Example:
 
 ```text
 10n^2 + 4n + 2 = Theta(n^2)
 ```
 
-because it is both:
+Because it is both:
 
 ```text
-O(n^2)
-Omega(n^2)
+O(n^2) and Omega(n^2)
 ```
 
----
+Lesson 03 explains Big-O, Omega, Theta, little-o, and little-omega as tools for comparing growth rates.
 
-## 6. Common Growth Rates
+### 5.4 Common Growth Rates
 
-From fastest to slowest:
+From best to worst:
 
 ```text
 O(1) < O(log n) < O(n) < O(n log n) < O(n^2) < O(n^3) < O(2^n) < O(n!)
@@ -301,71 +269,45 @@ O(1) < O(log n) < O(n) < O(n log n) < O(n^2) < O(n^3) < O(2^n) < O(n!)
 
 | Complexity | Name | Example |
 | --- | --- | --- |
-| O(1) | Constant | Access array element |
+| O(1) | Constant | Array access |
 | O(log n) | Logarithmic | Binary search |
 | O(n) | Linear | Sequential search |
 | O(n log n) | Linearithmic | Merge sort |
 | O(n^2) | Quadratic | Insertion sort worst case |
-| O(n^3) | Cubic | Standard matrix multiplication |
+| O(n^3) | Cubic | Matrix multiplication |
 | O(2^n) | Exponential | Naive Fibonacci |
-| O(n!) | Factorial | Brute-force permutations |
+| O(n!) | Factorial | Brute-force permutation problems |
 
 ---
 
-## 7. Complexity Rules
+## 6. Basic Complexity Patterns
 
-### Rule 1: Ignore Constants
+### 6.1 Constant Time
 
 ```text
-O(5n) = O(n)
+x = x + 1
 ```
 
-### Rule 2: Ignore Lower-Order Terms
+Complexity:
 
 ```text
-O(n^2 + n + 10) = O(n^2)
+O(1)
 ```
 
-### Rule 3: Keep the Dominant Term
+### 6.2 Single Loop
 
 ```text
-O(3n^3 + 5n^2 + 7n + 4) = O(n^3)
-```
-
----
-
-## 8. Basic Complexity Examples
-
-### 8.1 Constant Time
-
-```text
-Algorithm swap(a, b):
-    temp = a
-    a = b
-    b = temp
-```
-
-The number of statements is constant.
-
-```text
-T(n) = O(1)
-```
-
-### 8.2 Linear Time
-
-```text
-sum = 0
 for i = 1 to n:
-    sum = sum + i
+    print(i)
 ```
 
-The loop runs `n` times.
+Loop runs `n` times.
 
 ```text
-T(n) = O(n)
+O(n)
 ```
 
-### 8.3 Quadratic Time
+### 6.3 Nested Loop
 
 ```text
 for i = 1 to n:
@@ -373,234 +315,144 @@ for i = 1 to n:
         print(i, j)
 ```
 
-Total operations:
+Total:
 
 ```text
-n * n = n^2
+n x n = n^2
 ```
 
-Therefore:
+Complexity:
 
 ```text
-T(n) = O(n^2)
+O(n^2)
 ```
 
----
+### 6.4 Sum of 1 to n
 
-## 9. Sum of 1 to n
-
-### Method 1: Loop Method
+#### Loop method
 
 ```text
 sum = 0
 for i = 1 to n:
     sum = sum + i
-return sum
 ```
 
-The loop runs `n` times.
+Complexity:
 
 ```text
-T(n) = O(n)
+O(n)
 ```
 
-### Method 2: Formula Method
+#### Formula method
 
 ```text
-return n(n + 1) / 2
+sum = n(n + 1) / 2
 ```
 
-Only one formula is calculated.
+Complexity:
 
 ```text
-T(n) = O(1)
+O(1)
 ```
 
-Example: find the sum from `1` to `100`.
+Example:
 
 ```text
-n(n + 1) / 2
-= 100(100 + 1) / 2
-= 100 * 101 / 2
-= 5050
+1 + 2 + ... + 100 = 100(101)/2 = 5050
 ```
 
-So:
-
-```text
-1 + 2 + 3 + ... + 100 = 5050
-```
+Lesson 02 uses this type of comparison to show that different algorithms can solve the same problem with different efficiencies.
 
 ---
 
-## 10. Insertion Sort
+## 7. Insertion Sort
 
-Insertion sort builds the sorted array one element at a time.
+### 7.1 Idea
 
-### 10.1 Idea
+Insertion sort builds a sorted part of the array one element at a time.
 
-At each step:
-
-1. Take one element as the `key`.
-2. Compare it with previous elements.
-3. Shift larger elements to the right.
-4. Insert `key` in the correct position.
-
-### 10.2 Example
-
-Sort:
+Steps:
 
 ```text
-8 2 4 9 3 6
+1. Take current element as key
+2. Compare it with previous elements
+3. Shift larger elements right
+4. Insert key in correct position
 ```
 
-Step-by-step:
+Lesson 02 explains insertion sort with the input `8 2 4 9 3 6`.
+
+### 7.2 Example
 
 ```text
-Start:  8 2 4 9 3 6
+Input:  8 2 4 9 3 6
+
 Step 1: 2 8 4 9 3 6
 Step 2: 2 4 8 9 3 6
 Step 3: 2 4 8 9 3 6
 Step 4: 2 3 4 8 9 6
 Step 5: 2 3 4 6 8 9
+
+Output: 2 3 4 6 8 9
 ```
 
-Final sorted output:
+### 7.3 Complexity
 
-```text
-2 3 4 6 8 9
-```
+| Case | Complexity |
+| --- | --- |
+| Best case | O(n) |
+| Average case | O(n^2) |
+| Worst case | O(n^2) |
 
-### 10.3 Complexity
+Worst case occurs when the input is reverse sorted.
 
-| Case | Explanation | Complexity |
-| --- | --- | --- |
-| Best case | Already sorted array | O(n) |
-| Worst case | Reverse sorted array | O(n^2) |
-| Average case | Random order | O(n^2) |
-
-### 10.4 Worst-Case Maths
-
-For input size `n`, the number of comparisons or shifts is approximately:
+Mathematically:
 
 ```text
 1 + 2 + 3 + ... + (n - 1)
+= n(n - 1)/2
+= Theta(n^2)
 ```
 
-Using the arithmetic series formula:
+### 7.4 Loop Invariant
 
-```text
-(n - 1)n / 2
-= (n^2 - n) / 2
-```
-
-The dominant term is `n^2`.
-
-Therefore:
-
-```text
-T(n) = Theta(n^2)
-```
-
----
-
-## 11. Loop Invariant
-
-A loop invariant is a condition that remains true before and after every loop iteration.
-
-It is used to prove algorithm correctness.
+A loop invariant is a statement that remains true before and after every loop iteration.
 
 For insertion sort:
 
 ```text
-Before each iteration, the left part of the array is already sorted.
+Before each iteration, the left part of the array is sorted.
 ```
+
+Three parts:
+
+```text
+Initialization -> Maintenance -> Termination
+```
+
+This is used to prove insertion sort correctness.
+
+---
+
+## 8. Divide and Conquer
+
+Divide and conquer solves a problem by breaking it into smaller independent subproblems.
+
+### 8.1 Three Steps
 
 | Step | Meaning |
 | --- | --- |
-| Initialization | True before the first loop iteration |
-| Maintenance | Remains true after each iteration |
-| Termination | Helps prove final correctness |
+| Divide | Split problem |
+| Conquer | Solve subproblems recursively |
+| Combine | Merge subproblem solutions |
+
+Lesson 04 explains divide and conquer using merge sort, binary search, matrix multiplication, Strassen, and quicksort.
 
 ---
 
-## 12. Merge Sort
+## 9. Recurrence Relations
 
-Merge sort is a divide-and-conquer sorting algorithm.
-
-### 12.1 Main Idea
-
-1. Divide the array into two halves.
-2. Recursively sort both halves.
-3. Merge the two sorted halves.
-
-### 12.2 Example
-
-Sort:
-
-```text
-8 2 4 9 3 6
-```
-
-Divide:
-
-```text
-[8 2 4]      [9 3 6]
-[8] [2 4]    [9] [3 6]
-```
-
-Sort small parts:
-
-```text
-[2 4]        [3 6]
-```
-
-Merge:
-
-```text
-[2 4 8]      [3 6 9]
-```
-
-Final merge:
-
-```text
-[2 3 4 6 8 9]
-```
-
-### 12.3 Recurrence
-
-```text
-T(n) = 2T(n/2) + Theta(n)
-```
-
-| Part | Meaning |
-| --- | --- |
-| `2` | Two subproblems |
-| `T(n/2)` | Each subproblem has size `n/2` |
-| `Theta(n)` | Work needed to merge |
-
-Using Master Theorem:
-
-```text
-a = 2
-b = 2
-f(n) = n
-n^(log_b a) = n^(log_2 2) = n
-```
-
-Since `f(n) = Theta(n)`, this is Master Theorem Case 2.
-
-Therefore:
-
-```text
-T(n) = Theta(n log n)
-```
-
----
-
-## 13. Recurrence Relations
-
-A recurrence expresses the running time of a recursive algorithm in terms of smaller inputs.
+A recurrence expresses running time of a recursive algorithm.
 
 Example:
 
@@ -610,83 +462,41 @@ T(n) = 2T(n/2) + n
 
 Meaning:
 
-- The problem splits into 2 subproblems.
-- Each subproblem has size `n/2`.
-- Extra work outside recursion is `n`.
+```text
+2 subproblems of size n/2
+plus n extra work
+```
 
 ---
 
-## 14. Solving Recurrences
+## 10. Merge Sort
 
-### 14.1 Substitution Method
+### 10.1 Idea
 
-Steps:
-
-1. Guess the answer.
-2. Prove it using induction.
-3. Solve constants.
-
-Example:
+Merge sort uses divide and conquer.
 
 ```text
-T(n) = T(n - 1) + 1
+1. Divide array into two halves
+2. Recursively sort both halves
+3. Merge sorted halves
 ```
 
-Expand:
+### 10.2 Recurrence
 
 ```text
-T(n)     = T(n - 1) + 1
-T(n - 1) = T(n - 2) + 1
-T(n - 2) = T(n - 3) + 1
+T(n) = 2T(n/2) + Theta(n)
+```
+
+Using Master Theorem:
+
+```text
+a = 2
+b = 2
+f(n) = n
+n^(log_2 2) = n
 ```
 
 So:
-
-```text
-T(n) = T(n - 3) + 3
-```
-
-After `n` steps:
-
-```text
-T(n) = T(0) + n
-```
-
-Therefore:
-
-```text
-T(n) = Theta(n)
-```
-
-### 14.2 Recursion Tree Method
-
-Example:
-
-```text
-T(n) = 2T(n/2) + n
-```
-
-Level costs:
-
-```text
-Level 0: n
-Level 1: n/2 + n/2 = n
-Level 2: n/4 + n/4 + n/4 + n/4 = n
-```
-
-Number of levels:
-
-```text
-log_2 n
-```
-
-Total cost:
-
-```text
-n * log_2 n
-```
-
-Therefore:
 
 ```text
 T(n) = Theta(n log n)
@@ -694,128 +504,20 @@ T(n) = Theta(n log n)
 
 ---
 
-## 15. Divide and Conquer
+## 11. Binary Search
 
-Divide and conquer has three steps:
+Binary search works on a sorted array.
 
-| Step | Meaning |
-| --- | --- |
-| Divide | Break problem into smaller subproblems |
-| Conquer | Solve subproblems recursively |
-| Combine | Combine subproblem answers |
-
-Common examples:
-
-- Merge sort
-- Binary search
-- Fast exponentiation
-- Matrix multiplication
-- Quicksort
-
----
-
-## 16. Master Theorem
-
-Master Theorem is used for recurrences of the form:
+### 11.1 Idea
 
 ```text
-T(n) = aT(n/b) + f(n)
+1. Check middle element
+2. If target is smaller, search left half
+3. If target is larger, search right half
+4. Repeat
 ```
 
-| Symbol | Meaning |
-| --- | --- |
-| `a` | Number of subproblems |
-| `n/b` | Size of each subproblem |
-| `f(n)` | Work done outside recursive calls |
-
-Let:
-
-```text
-p = log_b a
-```
-
-### Case 1: Recursive Work Dominates
-
-If:
-
-```text
-f(n) = O(n^(p - epsilon))
-```
-
-Then:
-
-```text
-T(n) = Theta(n^p)
-```
-
-### Case 2: Work Is Balanced
-
-If:
-
-```text
-f(n) = Theta(n^p log^k n)
-```
-
-Then:
-
-```text
-T(n) = Theta(n^p log^(k + 1)n)
-```
-
-### Case 3: Outside Work Dominates
-
-If:
-
-```text
-f(n) = Omega(n^(p + epsilon))
-```
-
-Then:
-
-```text
-T(n) = Theta(f(n))
-```
-
----
-
-## 17. Binary Search
-
-Binary search works only on a sorted array.
-
-### 17.1 Idea
-
-1. Check the middle element.
-2. If the target is smaller, search the left half.
-3. If the target is larger, search the right half.
-4. Repeat.
-
-### 17.2 Example
-
-Array:
-
-```text
-3 5 7 8 9 12 15
-```
-
-Find:
-
-```text
-9
-```
-
-Steps:
-
-```text
-Middle = 8
-9 > 8, so search right half: 9 12 15
-
-Middle = 12
-9 < 12, so search left half: 9
-
-Found.
-```
-
-### 17.3 Recurrence
+### 11.2 Recurrence
 
 ```text
 T(n) = T(n/2) + Theta(1)
@@ -827,10 +529,10 @@ Using Master Theorem:
 a = 1
 b = 2
 f(n) = 1
-n^(log_2 1) = n^0 = 1
+n^(log_2 1) = 1
 ```
 
-Case 2:
+Therefore:
 
 ```text
 T(n) = Theta(log n)
@@ -838,7 +540,73 @@ T(n) = Theta(log n)
 
 ---
 
-## 18. Powering a Number
+## 12. Master Theorem
+
+Master Theorem solves recurrences of the form:
+
+```text
+T(n) = aT(n/b) + f(n)
+```
+
+Where:
+
+| Symbol | Meaning |
+| --- | --- |
+| a | Number of subproblems |
+| b | Factor of input reduction |
+| f(n) | Work outside recursive calls |
+
+### 12.1 Case 1
+
+If:
+
+```text
+f(n) = O(n^(log_b a - epsilon))
+```
+
+Then:
+
+```text
+T(n) = Theta(n^(log_b a))
+```
+
+Recursive part dominates.
+
+### 12.2 Case 2
+
+If:
+
+```text
+f(n) = Theta(n^(log_b a) log^k n)
+```
+
+Then:
+
+```text
+T(n) = Theta(n^(log_b a) log^(k+1)n)
+```
+
+Both recursive and non-recursive work are balanced.
+
+### 12.3 Case 3
+
+If:
+
+```text
+f(n) = Omega(n^(log_b a + epsilon))
+```
+
+Then:
+
+```text
+T(n) = Theta(f(n))
+```
+
+Non-recursive work dominates.
+
+---
+
+## 13. Powering a Number
 
 Problem:
 
@@ -846,10 +614,10 @@ Problem:
 Compute a^n
 ```
 
-### 18.1 Naive Method
+Naive method:
 
 ```text
-a * a * a * ... * a
+a x a x a x ... x a
 ```
 
 Complexity:
@@ -858,18 +626,14 @@ Complexity:
 Theta(n)
 ```
 
-### 18.2 Divide-and-Conquer Method
-
-If `n` is even:
+Divide-and-conquer method:
 
 ```text
-a^n = a^(n/2) * a^(n/2)
-```
+If n is even:
+a^n = a^(n/2) x a^(n/2)
 
-If `n` is odd:
-
-```text
-a^n = a^((n - 1)/2) * a^((n - 1)/2) * a
+If n is odd:
+a^n = a^((n-1)/2) x a^((n-1)/2) x a
 ```
 
 Recurrence:
@@ -884,26 +648,16 @@ Therefore:
 T(n) = Theta(log n)
 ```
 
-Example:
-
-```text
-2^8 = 2^4 * 2^4
-2^4 = 2^2 * 2^2
-2^2 = 2 * 2 = 4
-2^4 = 4 * 4 = 16
-2^8 = 16 * 16 = 256
-```
-
 ---
 
-## 19. Fibonacci Numbers
+## 14. Fibonacci Numbers
 
-Definition:
+Fibonacci definition:
 
 ```text
 F0 = 0
 F1 = 1
-Fn = F(n - 1) + F(n - 2), for n >= 2
+Fn = F(n-1) + F(n-2), for n >= 2
 ```
 
 Sequence:
@@ -912,29 +666,31 @@ Sequence:
 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, ...
 ```
 
-### 19.1 Naive Recursive Fibonacci
+### 14.1 Naive Recursive Fibonacci
 
 ```text
 fib(n):
     if n == 0 return 0
     if n == 1 return 1
-    return fib(n - 1) + fib(n - 2)
+    return fib(n-1) + fib(n-2)
 ```
 
-This is slow because it repeats many calculations.
+Complexity:
 
 ```text
-Complexity = exponential
+Exponential
 ```
 
-### 19.2 Bottom-Up Fibonacci
+Because the same subproblems are recomputed many times.
+
+### 14.2 Bottom-Up Fibonacci
 
 ```text
 F0 = 0
 F1 = 1
 
 for i = 2 to n:
-    Fi = F(i - 1) + F(i - 2)
+    Fi = F(i-1) + F(i-2)
 ```
 
 Complexity:
@@ -943,52 +699,30 @@ Complexity:
 Theta(n)
 ```
 
-Example: find `F6`.
-
-```text
-F0 = 0
-F1 = 1
-F2 = 1
-F3 = 2
-F4 = 3
-F5 = 5
-F6 = 8
-```
+Lesson 05 uses Fibonacci to show how dynamic programming avoids repeated calculations and computes the answer in linear time.
 
 ---
 
-## 20. Matrix Multiplication
+## 15. Matrix Multiplication and Strassen's Algorithm
 
-Given two `n x n` matrices `A` and `B`, output matrix `C = A x B`.
+### 15.1 Standard Matrix Multiplication
 
-Each element:
-
-```text
-c_ij = sum of a_ik * b_kj
-```
-
-### 20.1 Standard Matrix Multiplication
+For two `n x n` matrices:
 
 ```text
 for i = 1 to n:
     for j = 1 to n:
         for k = 1 to n:
-            C[i][j] += A[i][k] * B[k][j]
+            C[i][j] += A[i][k] x B[k][j]
 ```
 
-Total operations:
+Complexity:
 
 ```text
-n * n * n = n^3
+Theta(n^3)
 ```
 
-Therefore:
-
-```text
-T(n) = Theta(n^3)
-```
-
-### 20.2 Divide-and-Conquer Matrix Multiplication
+### 15.2 Divide-and-Conquer Matrix Multiplication
 
 Recurrence:
 
@@ -1004,17 +738,17 @@ b = 2
 n^(log_2 8) = n^3
 ```
 
-Since `f(n) = Theta(n^2)` is smaller than `n^3`:
+So:
 
 ```text
 T(n) = Theta(n^3)
 ```
 
-So normal divide-and-conquer matrix multiplication is not asymptotically better than the standard algorithm.
+This is not better than standard matrix multiplication.
 
-### 20.3 Strassen's Algorithm
+### 15.3 Strassen's Algorithm
 
-Strassen reduces recursive multiplications from `8` to `7`.
+Strassen reduces 8 recursive multiplications to 7.
 
 Recurrence:
 
@@ -1036,119 +770,24 @@ Therefore:
 T(n) = Theta(n^2.81)
 ```
 
-This is better than:
-
-```text
-Theta(n^3)
-```
-
-The difference matters because it is in the exponent.
+This is asymptotically faster than `Theta(n^3)`. Lesson 04 also includes an exercise where the largest integer value to beat Strassen under a recurrence `T(n) = aT(n/4) + Theta(n^2)` is `a = 48`.
 
 ---
 
-## 21. Strassen Improvement Problem
+## 16. Quicksort
 
-Problem:
+Quicksort is a divide-and-conquer sorting algorithm.
 
-```text
-T(n) = aT(n/4) + Theta(n^2)
-```
-
-Find the largest integer `a` so the algorithm is faster than Strassen's algorithm.
-
-Strassen:
+### 16.1 Idea
 
 ```text
-T(n) = Theta(n^(log_2 7))
+1. Choose a pivot
+2. Partition array into elements <= pivot and >= pivot
+3. Recursively sort both parts
+4. Combine is trivial
 ```
 
-We need:
-
-```text
-log_4 a < log_2 7
-```
-
-Since:
-
-```text
-log_2 7 approx 2.807
-```
-
-Then:
-
-```text
-log_4 a < 2.807
-a < 4^2.807
-a < 49
-```
-
-Largest integer:
-
-```text
-a = 48
-```
-
-Answer:
-
-```text
-48
-```
-
----
-
-## 22. Quicksort
-
-Quicksort is a divide-and-conquer sorting algorithm proposed by C. A. R. Hoare.
-
-It is in-place and very practical with good tuning.
-
-### 22.1 Main Idea
-
-1. Choose a pivot.
-2. Partition the array:
-   - Elements smaller than the pivot go left.
-   - Elements greater than the pivot go right.
-3. Recursively sort the left and right parts.
-
-### 22.2 Example
-
-Array:
-
-```text
-8 2 4 9 3 6
-```
-
-Choose pivot:
-
-```text
-6
-```
-
-Partition:
-
-```text
-[2 4 3] 6 [8 9]
-```
-
-Sort left:
-
-```text
-[2 3 4]
-```
-
-Sort right:
-
-```text
-[8 9]
-```
-
-Final:
-
-```text
-2 3 4 6 8 9
-```
-
-### 22.3 Complexity
+### 16.2 Complexity
 
 | Case | Complexity |
 | --- | --- |
@@ -1156,236 +795,725 @@ Final:
 | Average case | Theta(n log n) |
 | Worst case | Theta(n^2) |
 
-Worst case happens when the pivot always becomes the minimum or maximum element, such as with already sorted or reverse sorted input.
+Worst case happens when the pivot is always the minimum or maximum element, such as with sorted or reverse-sorted input.
 
 ---
 
-## 23. Algorithm Comparison Table
+## 17. Dynamic Programming
 
-| Algorithm | Best Case | Average Case | Worst Case | Notes |
-| --- | ---: | ---: | ---: | --- |
-| Sequential search | O(1) | O(n) | O(n) | Works on unsorted arrays |
-| Binary search | O(1) | O(log n) | O(log n) | Requires sorted array |
-| Insertion sort | O(n) | O(n^2) | O(n^2) | Good for small or nearly sorted data |
-| Merge sort | O(n log n) | O(n log n) | O(n log n) | Stable and predictable |
-| Quicksort | O(n log n) | O(n log n) | O(n^2) | Fast in practice |
-| Standard matrix multiplication | O(n^3) | O(n^3) | O(n^3) | Three nested loops |
-| Strassen | O(n^2.81) | O(n^2.81) | O(n^2.81) | Faster asymptotically |
-| Bottom-up Fibonacci | O(n) | O(n) | O(n) | Avoids repeated recursion |
-| Naive Fibonacci | Exponential | Exponential | Exponential | Very inefficient |
+### 17.1 What is Dynamic Programming?
+
+Dynamic Programming is an algorithm design technique used for problems with:
+
+```text
+Overlapping subproblems
+Optimal substructure
+```
+
+Dynamic programming improves inefficient divide-and-conquer algorithms by solving each subproblem once and storing the result in a table. Lesson 05 explains that "programming" here refers to a tabular method.
+
+### 17.2 DP vs Divide and Conquer
+
+| Divide and Conquer | Dynamic Programming |
+| --- | --- |
+| Subproblems are usually independent | Subproblems overlap |
+| Does not usually store subproblem results | Stores subproblem results |
+| May recompute same subproblem | Avoids recomputation |
+| Example: Merge sort | Example: Fibonacci, rod cutting |
+
+### 17.3 Elements of Dynamic Programming
+
+A problem is suitable for DP if it has:
+
+| Element | Meaning |
+| --- | --- |
+| Simple subproblems | Original problem can be broken into similar smaller problems |
+| Optimal substructure | Optimal solution contains optimal solutions to subproblems |
+| Overlapping subproblems | Same subproblems occur multiple times |
+
+Lesson 05 identifies these as the main elements of Dynamic Programming.
+
+### 17.4 Steps to Design a DP Algorithm
+
+1. Characterize the structure of an optimal solution.
+2. Recursively define the value of an optimal solution.
+3. Compute the value, usually bottom-up.
+4. Construct the optimal solution from computed information.
+
+These four design steps are given in Lesson 05.
+
+### 17.5 Principle of Optimality
+
+The principle of optimality states:
+
+```text
+In an optimal sequence of decisions, every subsequence must also be optimal.
+```
+
+This principle is the foundation of dynamic programming.
 
 ---
 
-## 24. Exam-Style Questions
+## 18. Coin-Row Problem
 
-### Question 1
+### 18.1 Problem
 
-Find the Big-O of:
+Given a row of coins:
 
 ```text
-f(n) = 5n^2 + 3n + 20
+c1, c2, ..., cn
 ```
 
-Answer:
+Choose coins to maximize total value, but no two adjacent coins can be selected.
+
+Example:
 
 ```text
-Dominant term = 5n^2
-Ignore constants = n^2
-f(n) = O(n^2)
+Coins: 5, 1, 6, 10, 5, 2
 ```
 
-### Question 2
+### 18.2 DP Recurrence
 
-Find the complexity:
+Let:
 
 ```text
-for i = 1 to n:
-    print(i)
+F(n) = maximum amount from first n coins
 ```
 
-Answer:
+For the nth coin, there are two choices:
 
 ```text
-Loop runs n times.
-T(n) = O(n)
+Do not pick coin n -> F(n-1)
+Pick coin n -> cn + F(n-2)
 ```
 
-### Question 3
-
-Find the complexity:
+Therefore:
 
 ```text
-for i = 1 to n:
-    for j = 1 to n:
-        print(i, j)
+F(n) = max{ cn + F(n-2), F(n-1) }
 ```
 
-Answer:
+Base cases:
 
 ```text
-Outer loop = n
-Inner loop = n
-Total = n * n = n^2
-T(n) = O(n^2)
+F(0) = 0
+F(1) = c1
 ```
 
-### Question 4
+This recurrence and table method are shown in Lesson 05.
 
-Solve:
+### 18.3 Example
+
+Coins:
 
 ```text
-T(n) = 2T(n/2) + n
+5, 1, 6, 10, 5, 2
 ```
 
-Answer:
+Table:
+
+| i | 0 | 1 | 2 | 3 | 4 | 5 | 6 |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| coin | - | 5 | 1 | 6 | 10 | 5 | 2 |
+| F(i) | 0 | 5 | 5 | 11 | 15 | 16 | 17 |
+
+Maximum amount:
 
 ```text
-a = 2
-b = 2
-f(n) = n
-n^(log_2 2) = n
-Case 2
-T(n) = Theta(n log n)
+17
 ```
 
-### Question 5
-
-Solve:
+One optimal choice:
 
 ```text
-T(n) = T(n/2) + 1
+Coin 1 + Coin 4 + Coin 6 = 5 + 10 + 2 = 17
 ```
 
-Answer:
+Complexity:
 
 ```text
-a = 1
-b = 2
-f(n) = 1
-n^(log_2 1) = 1
-Case 2
-T(n) = Theta(log n)
+Time: O(n)
+Space: O(n)
 ```
 
-### Question 6
-
-Solve:
+With optimization, only previous two values are needed, so space can be reduced to:
 
 ```text
-T(n) = 8T(n/2) + n^2
+O(1)
 ```
 
-Answer:
+---
+
+## 19. Rod Cutting Problem
+
+### 19.1 Problem
+
+A rod of length `n` can be cut into pieces. Each length has a price. The goal is to maximize total revenue.
+
+Example price table from Lesson 05:
+
+| Length i | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Price p_i | 1 | 5 | 8 | 9 | 10 | 17 | 17 | 20 | 24 | 30 |
+
+Lesson 05 explains that brute force considers `2^(n-1)` possible cutting ways, which is exponential.
+
+### 19.2 Recurrence
+
+Let:
 
 ```text
-a = 8
-b = 2
-f(n) = n^2
-n^(log_2 8) = n^3
-n^2 is smaller than n^3
-Case 1
+r_n = maximum revenue for rod length n
+```
+
+Then:
+
+```text
+r_n = max( p_i + r_{n-i} ), for 1 <= i <= n
+```
+
+Base case:
+
+```text
+r_0 = 0
+```
+
+### 19.3 Example
+
+For rod length `4`:
+
+Prices:
+
+```text
+p1 = 1, p2 = 5, p3 = 8, p4 = 9
+```
+
+Possible revenues:
+
+```text
+1 + r3 = 1 + 8 = 9
+5 + r2 = 5 + 5 = 10
+8 + r1 = 8 + 1 = 9
+9 + r0 = 9 + 0 = 9
+```
+
+Maximum:
+
+```text
+r4 = 10
+```
+
+Optimal cutting:
+
+```text
+2 + 2
+```
+
+Revenue:
+
+```text
+5 + 5 = 10
+```
+
+### 19.4 Top-Down Memoization
+
+Top-down memoization solves recursively but stores answers in a table.
+
+Idea:
+
+```text
+If result is already stored, return it.
+Otherwise compute it and store it.
+```
+
+This avoids repeated recursive calculations.
+
+### 19.5 Bottom-Up Rod Cutting
+
+Bottom-up DP solves smaller subproblems first.
+
+```text
+r[0] = 0
+
+for j = 1 to n:
+    q = -infinity
+    for i = 1 to j:
+        q = max(q, p[i] + r[j-i])
+    r[j] = q
+```
+
+Total iterations:
+
+```text
+1 + 2 + 3 + ... + n = n(n+1)/2
+```
+
+Therefore:
+
+```text
+Time Complexity = Theta(n^2)
+```
+
+Lesson 05 states that bottom-up rod cutting runs in `Theta(n^2)` time.
+
+---
+
+## 20. Matrix Chain Multiplication
+
+### 20.1 Problem
+
+Given matrices:
+
+```text
+A1, A2, ..., An
+```
+
+Find the best parenthesization to minimize scalar multiplications.
+
+Important point:
+
+```text
+Matrix multiplication is associative, but cost depends on parenthesization.
+```
+
+Lesson 05 explains this using examples such as:
+
+```text
+(A1 x A2) x A3
+A1 x (A2 x A3)
+```
+
+### 20.2 Matrix Multiplication Cost
+
+If matrix `A` has dimension:
+
+```text
+p x q
+```
+
+and matrix `B` has dimension:
+
+```text
+q x r
+```
+
+Then multiplication cost is:
+
+```text
+p x q x r
+```
+
+Example:
+
+```text
+A = 2 x 3
+B = 3 x 2
+Cost = 2 x 3 x 2 = 12
+```
+
+This exact cost calculation is shown in Lesson 05.
+
+### 20.3 Example
+
+Suppose:
+
+```text
+A1 = 2 x 3
+A2 = 3 x 4
+A3 = 4 x 2
+```
+
+#### Option 1: `(A1 x A2) x A3`
+
+First:
+
+```text
+A1 x A2 cost = 2 x 3 x 4 = 24
+```
+
+Result dimension:
+
+```text
+2 x 4
+```
+
+Then:
+
+```text
+(A1 x A2) x A3 cost = 2 x 4 x 2 = 16
+```
+
+Total:
+
+```text
+24 + 16 = 40
+```
+
+#### Option 2: `A1 x (A2 x A3)`
+
+First:
+
+```text
+A2 x A3 cost = 3 x 4 x 2 = 24
+```
+
+Result dimension:
+
+```text
+3 x 2
+```
+
+Then:
+
+```text
+A1 x (A2 x A3) cost = 2 x 3 x 2 = 12
+```
+
+Total:
+
+```text
+24 + 12 = 36
+```
+
+So the better parenthesization is:
+
+```text
+A1 x (A2 x A3)
+```
+
+because:
+
+```text
+36 < 40
+```
+
+---
+
+## 21. Greedy Algorithms
+
+### 21.1 What is a Greedy Algorithm?
+
+A greedy algorithm makes the choice that seems best at the current moment.
+
+```text
+Local best choice -> hope for global best solution
+```
+
+Lesson 06 defines greedy algorithms as making the locally optimal choice in the hope that it leads to a globally optimal solution.
+
+### 21.2 Characteristics of Greedy Algorithms
+
+A greedy algorithm:
+
+```text
+1. Makes a sequence of choices
+2. Each choice seems best at that moment
+3. Choice depends only on what has been done so far
+4. Choice reduces the problem size
+```
+
+### 21.3 Important Warning
+
+Greedy algorithms do not always produce an optimal solution.
+
+They work only when the problem has:
+
+```text
+Greedy-choice property
+Optimal substructure
+```
+
+Lesson 06 explicitly lists these two ingredients for problems suitable for greedy strategy.
+
+### 21.4 Greedy-Choice Property
+
+A problem has the greedy-choice property if a globally optimal solution can be reached by making a locally optimal choice.
+
+Meaning:
+
+```text
+Choose the best current option,
+then solve the remaining subproblem.
+```
+
+But we must prove that this greedy choice leads to an optimal solution.
+
+### 21.5 Optimal Substructure
+
+A problem has optimal substructure if an optimal solution contains optimal solutions to its subproblems.
+
+This is also important in Dynamic Programming, but the difference is:
+
+```text
+DP usually solves many overlapping subproblems.
+Greedy chooses one direction and does not reconsider previous choices.
+```
+
+---
+
+## 22. Activity Selection Problem
+
+### 22.1 Problem
+
+Input:
+
+```text
+Set of activities S = {a1, a2, ..., an}
+```
+
+Each activity has:
+
+```text
+start time s_i
+finish time f_i
+```
+
+Goal:
+
+```text
+Select the maximum-size subset of mutually compatible activities.
+```
+
+Two activities are compatible if their time intervals do not overlap.
+
+### 22.2 Greedy Strategy
+
+The greedy rule is:
+
+```text
+Always select the activity that finishes earliest.
+```
+
+Steps:
+
+```text
+1. Sort activities by finish time
+2. Select the first activity
+3. For each next activity:
+      select it if start time >= finish time of last selected activity
+```
+
+Lesson 06 describes this as the "early finish greedy" strategy.
+
+### 22.3 Pseudocode
+
+```text
+GREEDY-ACTIVITY-SELECTOR(s, f)
+
+A = {a1}
+i = 1
+
+for m = 2 to n:
+    if s[m] >= f[i]:
+        A = A union {am}
+        i = m
+
+return A
+```
+
+### 22.4 Why Earliest Finish Works
+
+It leaves as much remaining time as possible for other activities. Therefore, it maximizes the opportunity to schedule more activities. Lesson 06 explains that the greedy choice maximizes the amount of unscheduled time remaining.
+
+### 22.5 Complexity
+
+If activities are already sorted by finish time:
+
+```text
+O(n)
+```
+
+If sorting is required:
+
+```text
+O(n log n)
+```
+
+---
+
+## 23. Greedy Scheduling Example
+
+Lesson 06 gives a scheduling example with 9 jobs:
+
+```text
+3, 5, 6, 10, 11, 14, 15, 18, 20 minutes
+```
+
+and 3 processors.
+
+One greedy approach:
+
+```text
+Run longest jobs first on available processors
+```
+
+The lecture states this gives completion time:
+
+```text
+18 + 11 + 6 = 35 minutes
+```
+
+Another approach:
+
+```text
+Run shortest jobs first
+```
+
+This gives completion time:
+
+```text
+6 + 14 + 20 = 40 minutes
+```
+
+This shows that greedy algorithms are fast, but a greedy choice may not always be globally best.
+
+---
+
+## 24. Huffman Encoding
+
+Lesson 06 also mentions Huffman encoding as a greedy algorithm.
+
+Main idea:
+
+```text
+Always combine the two smallest frequencies first.
+```
+
+This greedy strategy builds an efficient prefix code.
+
+---
+
+## 25. DP vs Greedy
+
+| Feature | Dynamic Programming | Greedy |
+| --- | --- | --- |
+| Strategy | Solves many subproblems and stores answers | Makes best current choice |
+| Subproblems | Overlapping | Usually one remaining subproblem |
+| Reconsider decisions? | Yes, through table comparison | No |
+| Guarantees optimal? | Yes, if recurrence is correct | Only if greedy-choice property holds |
+| Examples | Fibonacci, coin-row, rod cutting, matrix chain | Activity selection, Huffman coding |
+
+---
+
+## 26. Important Algorithm Complexity Summary
+
+| Algorithm / Problem | Complexity |
+| --- | ---: |
+| Sequential search | O(n) |
+| Binary search | O(log n) |
+| Sum using loop | O(n) |
+| Sum using formula | O(1) |
+| Insertion sort best case | O(n) |
+| Insertion sort worst case | O(n^2) |
+| Merge sort | Theta(n log n) |
+| Quicksort average case | Theta(n log n) |
+| Quicksort worst case | Theta(n^2) |
+| Standard matrix multiplication | Theta(n^3) |
+| Strassen matrix multiplication | Theta(n^2.81) |
+| Naive Fibonacci | Exponential |
+| Bottom-up Fibonacci | Theta(n) |
+| Coin-row DP | O(n) |
+| Rod cutting DP | Theta(n^2) |
+| Activity selection greedy | O(n) if already sorted |
+| Activity selection with sorting | O(n log n) |
+
+---
+
+## 27. Exam-Focused Formulas
+
+### Arithmetic Series
+
+```text
+1 + 2 + 3 + ... + n = n(n + 1)/2
+```
+
+Used in:
+
+```text
+Insertion sort worst case
+Rod cutting bottom-up analysis
+Nested cumulative loop analysis
+```
+
+### Merge Sort
+
+```text
+T(n) = 2T(n/2) + n = Theta(n log n)
+```
+
+### Binary Search
+
+```text
+T(n) = T(n/2) + 1 = Theta(log n)
+```
+
+### Standard Matrix Multiplication
+
+```text
 T(n) = Theta(n^3)
 ```
 
-### Question 7
-
-Solve:
+### Strassen
 
 ```text
-T(n) = 7T(n/2) + n^2
+T(n) = 7T(n/2) + n^2 = Theta(n^(log_2 7)) approx Theta(n^2.81)
 ```
 
-Answer:
+### Coin-Row
 
 ```text
-a = 7
-b = 2
-f(n) = n^2
-n^(log_2 7) approx n^2.81
-n^2 is smaller than n^2.81
-Case 1
-T(n) = Theta(n^2.81)
+F(n) = max{ cn + F(n-2), F(n-1) }
+F(0) = 0
+F(1) = c1
 ```
 
-### Question 8
-
-Compare insertion sort and merge sort for large input.
-
-Answer:
+### Rod Cutting
 
 ```text
-Insertion sort worst case = Theta(n^2)
-Merge sort worst case = Theta(n log n)
+r_n = max( p_i + r_{n-i} ), 1 <= i <= n
+r_0 = 0
+```
 
-Since n log n grows slower than n^2,
-merge sort is better for large input.
+### Matrix Chain Multiplication Cost
+
+```text
+Cost of multiplying (p x q) and (q x r) matrices = pqr
 ```
 
 ---
 
-## 25. Final Revision Points
+## 28. Very Important Final Revision
 
-Remember:
+For your exam or assignment, remember these points strongly:
 
 ```text
 Algorithm = finite step-by-step solution
-Complexity = resource usage growth
+Correctness = correct output + termination
+Complexity = time/space growth with input size
 Big-O = upper bound
 Omega = lower bound
 Theta = tight bound
-Worst case = most commonly analyzed
+Worst case = most common analysis
 Divide and conquer = divide + conquer + combine
-Recurrence = running time equation for recursion
-Master Theorem = shortcut for divide-and-conquer recurrences
+Recurrence = time equation for recursion
+Master theorem = shortcut for divide-and-conquer recurrences
+Dynamic programming = overlapping subproblems + optimal substructure
+Greedy = local best choice, works only when greedy-choice property holds
 ```
 
-Most important formulas:
+Most important topics to practice:
 
 ```text
-1 + 2 + ... + n = n(n + 1) / 2
-
-T(n) = aT(n/b) + f(n)
-
-Merge sort:
-T(n) = 2T(n/2) + n = Theta(n log n)
-
-Binary search:
-T(n) = T(n/2) + 1 = Theta(log n)
-
-Insertion sort worst case:
-Theta(n^2)
-
-Standard matrix multiplication:
-Theta(n^3)
-
-Strassen:
-Theta(n^2.81)
+1. Big-O simplification
+2. Loop complexity
+3. Recurrence solving
+4. Master theorem
+5. Merge sort and binary search recurrence
+6. Insertion sort analysis
+7. Strassen recurrence
+8. Coin-row DP table
+9. Rod cutting recurrence
+10. Matrix chain multiplication cost
+11. Activity selection greedy algorithm
+12. Difference between DP and Greedy
 ```
-
----
-
-## 26. Study Plan
-
-Study in this order:
-
-1. Understand what an algorithm is.
-2. Learn time complexity and Big-O.
-3. Practice loop counting.
-4. Learn insertion sort and merge sort.
-5. Practice recurrence relations.
-6. Learn Master Theorem.
-7. Practice binary search, matrix multiplication, Strassen, and quicksort.
-
-For exam preparation, focus heavily on:
-
-```text
-Big-O simplification
-Loop complexity
-Insertion sort analysis
-Merge sort recurrence
-Binary search recurrence
-Master Theorem
-Strassen recurrence
-Quicksort best/average/worst case
-```
-
